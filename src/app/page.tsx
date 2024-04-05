@@ -93,7 +93,9 @@ export default function Home() {
 
   const firstData = data?.list[0]
 
-  //console.log("api data",data)
+  console.log("api data",data)
+
+  
   
 
   
@@ -122,6 +124,11 @@ export default function Home() {
   )
 
 
+    var utcDate = data?.list[0].dt
+    var localDate = new Date(utcDate)
+    var date123 =localDate.toISOString()
+  
+
 
   return (
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen ">
@@ -133,8 +140,14 @@ export default function Home() {
           <section className="space-y-4">
             <div className="space-y-2">
               <h2 className="flex gap-1 text-2xl items-end ">
-                <p> {format(parseISO(firstData?.dt_txt ??''),"EEEE") } </p>
-                <p className="text-lg"> ({format(parseISO(firstData?.dt_txt ??''),"MM.dd.yyyy") }) </p>
+
+              <p> {getDate4(firstData?.dt,data?.city.timezone)} </p>
+                {/** <p> {format(parseISO(firstData?.dt_txt ??''),"EEEE") } </p>
+                <p> {getDate4(firstData?.dt,data?.city.timezone)} </p>
+
+                <p className="text-lg"> {(getDate2(firstData?.dt))} </p>
+
+                {/**<p className="text-lg"> ({format(parseISO(firstData?.dt_txt ??''),"MM.dd.yyyy") }) </p>*/}
               </h2>
               <Container className=" gap-10 px-6 items-center ">
                 <div className=" flex flex-col px-4 ">
@@ -166,7 +179,40 @@ export default function Home() {
                   className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
                   > 
                     <p className="whitespace-nowrap">
-                      {format(parseISO(d.dt_txt),'h:mm a')}
+                      {/**  {format(parseISO(d.dt_txt),'h:mm a')}*/}
+                     
+
+                     
+                      {getLocalTimeOfSearchedCity(d.dt, data?.city.timezone)}
+
+                      {/*{"-----"}
+                     
+                      {getDate4(d.dt, data?.city.timezone)}
+
+                      {"-----"}
+
+                      {getLocalTimeOfSearchedCity(d.dt, data?.city.timezone)}
+                      {/** 
+                      {firstData?.dt}
+                      {" "}
+                      {data?.list[0].dt}
+                      {" "}
+                      {data?.city.timezone}
+
+                      {getDate(firstData?.dt, data?.city.timezone)}
+
+                      {date123}
+
+                      */}
+                      
+
+
+
+
+
+
+                      
+
                     </p>
                     {/*<WeatherIcon iconName={d.weather[0].icon}/>*/}
                     <WeatherIcon iconName={getDayOrNightIcon(d.weather[0].icon,d.dt_txt)}/>
@@ -233,6 +279,65 @@ export default function Home() {
   );
 }
 
+function getTime(dt: string, timezone:string):string {
+  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+  const utc_seconds = parseInt(dt, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toLocaleTimeString('en-US');
+  return local_date;
+}     
+
+function getDate(dt: string):string {
+  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+  const utc_seconds = parseInt(dt, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toDateString();
+  return local_date;
+}  
+
+function getDate2(dt: string):string {
+  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+  const utc_seconds = parseInt(dt, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toLocaleDateString();
+  return local_date;
+}  
+
+function getDate3(dt: string, timezone:string):string {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+  //const utc_seconds = parseInt(dt, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toLocaleDateString(undefined, options);;
+  return local_date;
+}  
+
+function getDate4(dt, timezone) {
+  const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toUTCString();
+  // const local_date = new Date(utc_milliseconds)
+  // console.log(local_date.toString)
+  // const localhour = local_date.getUTCHours
+  // const localminute = local_date.getUTCMinutes
+  // const localtime = ""+localhour+":"+localminute
+  return local_date.substring(0,16);
+}
+
+function getLocalTimeOfSearchedCity(dt: string, timezone:string):string {
+const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+ //const utc_seconds = parseInt(dt, 10);
+  const utc_milliseconds = utc_seconds * 1000;
+  const local_date = new Date(utc_milliseconds).toLocaleTimeString('en-US',
+  {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+);
+  return local_date;
+}   
 
 // function WeatherSkeleton(){
 //   return (

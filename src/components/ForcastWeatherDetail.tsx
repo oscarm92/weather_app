@@ -44,6 +44,21 @@ export default function ForcastWeatherDetail(props: ForcastWeatherDetailProps)
                     <span>Feels like</span>
                     <span>{convertKelvinToFahrenheit(feels_like ?? 0 )}</span>
                 </p>
+
+
+                <p className="text-xs space-x-2">
+                    <span>
+                    {convertKelvinToFahrenheit(temp_min ?? 0)}
+                    °↓ {" "}
+                    </span>
+                    <span>
+                    {convertKelvinToFahrenheit(temp_max ?? 0)}
+                    °↑ {" "}
+                    </span>
+                  </p>
+
+
+
                 <p className='capitalize'>{description}</p>
 
             </div>

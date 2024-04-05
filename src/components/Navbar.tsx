@@ -41,8 +41,12 @@ export default function Navbar({location}: Props) {
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`
         )
+          //parseFloat().toFixed(2)
+        const suggestions = response.data.list.map((item:any)=>(item.name+" ("+item.coord.lat.toFixed(2)+","+item.coord.lon.toFixed(2)+")"))
+       // const suggestionsCountry = response.data.sys.map((item:any)=>item.country)
 
-        const suggestions = response.data.list.map((item:any)=>item.name)
+      // const suggestions1 = response.data.list.map((item:any)=>(item.))
+
         setSuggestions(suggestions);
         setError('')
         setShowSuggestions(true)
@@ -79,6 +83,7 @@ export default function Navbar({location}: Props) {
       },500)
     }
   }
+
 
   function handleCurrentLocation(){
     if(navigator.geolocation){
