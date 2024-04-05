@@ -125,8 +125,8 @@ export default function Home() {
 
 
     var utcDate = data?.list[0].dt
-    var localDate = new Date(utcDate)
-    var date123 =localDate.toISOString()
+    //var localDate = new Date(utcDate)
+    //var date123 =localDate.toISOString()
   
 
 
@@ -317,7 +317,7 @@ function getDate3(dt: string, timezone:string):string {
   return local_date;
 }  
 
-function getDate4(dt, timezone) {
+function getDate4(dt: string, timezone:string):string  {
   const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
   const utc_milliseconds = utc_seconds * 1000;
   const local_date = new Date(utc_milliseconds).toUTCString();

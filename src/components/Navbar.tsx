@@ -42,7 +42,7 @@ export default function Navbar({location}: Props) {
           `https://api.openweathermap.org/data/2.5/find?q=${value}&appid=${API_KEY}`
         )
           //parseFloat().toFixed(2)
-        const suggestions = response.data.list.map((item:any)=>(item.name+" ("+item.coord.lat.toFixed(2)+","+item.coord.lon.toFixed(2)+")"))
+        const suggestions = response.data.list.map((item:any)=>(item.name))
        // const suggestionsCountry = response.data.sys.map((item:any)=>item.country)
 
       // const suggestions1 = response.data.list.map((item:any)=>(item.))
