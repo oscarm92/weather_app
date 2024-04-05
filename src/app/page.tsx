@@ -141,7 +141,7 @@ export default function Home() {
             <div className="space-y-2">
               <h2 className="flex gap-1 text-2xl items-end ">
 
-              <p> {getDate4(firstData?.dt,data?.city.timezone)} </p>
+              <p> {getDate4(firstData?.dt!, data?.city.timezone!)} </p>
                 {/** <p> {format(parseISO(firstData?.dt_txt ??''),"EEEE") } </p>
                 <p> {getDate4(firstData?.dt,data?.city.timezone)} </p>
 
@@ -278,47 +278,8 @@ export default function Home() {
     </div>
   );
 }
-
-function getTime(dt: string, timezone:string):string {
-  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
-  const utc_seconds = parseInt(dt, 10);
-  const utc_milliseconds = utc_seconds * 1000;
-  const local_date = new Date(utc_milliseconds).toLocaleTimeString('en-US');
-  return local_date;
-}     
-
-function getDate(dt: string):string {
-  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
-  const utc_seconds = parseInt(dt, 10);
-  const utc_milliseconds = utc_seconds * 1000;
-  const local_date = new Date(utc_milliseconds).toDateString();
-  return local_date;
-}  
-
-function getDate2(dt: string):string {
-  //const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
-  const utc_seconds = parseInt(dt, 10);
-  const utc_milliseconds = utc_seconds * 1000;
-  const local_date = new Date(utc_milliseconds).toLocaleDateString();
-  return local_date;
-}  
-
-function getDate3(dt: string, timezone:string):string {
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-  const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
-  //const utc_seconds = parseInt(dt, 10);
-  const utc_milliseconds = utc_seconds * 1000;
-  const local_date = new Date(utc_milliseconds).toLocaleDateString(undefined, options);;
-  return local_date;
-}  
-
-function getDate4(dt: string, timezone:string):string  {
-  const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+function getDate4(dt: number, timezone: number):string  {
+  const utc_seconds = dt + timezone;
   const utc_milliseconds = utc_seconds * 1000;
   const local_date = new Date(utc_milliseconds).toUTCString();
   // const local_date = new Date(utc_milliseconds)
@@ -329,8 +290,8 @@ function getDate4(dt: string, timezone:string):string  {
   return local_date.substring(0,16);
 }
 
-function getLocalTimeOfSearchedCity(dt: string, timezone:string):string {
-const utc_seconds = parseInt(dt, 10) + parseInt(timezone, 10);
+function getLocalTimeOfSearchedCity(dt: number, timezone: number):string {
+const utc_seconds = dt + timezone;
  //const utc_seconds = parseInt(dt, 10);
   const utc_milliseconds = utc_seconds * 1000;
   const local_date = new Date(utc_milliseconds).toLocaleTimeString('en-US',
